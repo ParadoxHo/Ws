@@ -1,0 +1,11 @@
+body{background:#0b0f14;color:white;font-family:Arial}
+.container{max-width:1200px;margin:auto;padding:30px}
+.header{background:#0d131a}
+.nav{display:flex;justify-content:space-between;align-items:center}
+.logo img{height:50px}
+nav a{color:#b6c2cf;margin-left:20px;text-decoration:none}
+.hero{padding:120px 20px}
+.btn{background:#3b82f6;padding:15px 30px;color:white;text-decoration:none}
+.section{padding:60px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
+.card{background:#0f1620;padding:25px;border-radius:10px}
