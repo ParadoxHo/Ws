@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alarmonix | Systemy Bezpieczeństwa | Monitoring | Alarmy | Kontrola Dostępu</title>
+  <meta name="description" content="Profesjonalny montaż systemów monitoringu CCTV, alarmowych SSWiN oraz kontroli dostępu. Katowice i cała Polska.">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --navy: #0a1428;
+      --green: #00d4aa;
+      --text: #eaf2f9;
+      --text-muted: #8ea2b6;
+      --card: #0f1a33;
+      --border: #1e2a44;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1350px; margin: 0 auto; padding: 0 25px; }
+
+    header {
+      background: rgba(10, 20, 40, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .logo img {
+      height: 68px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .hero {
+      padding: 140px 0 100px;
+      background: linear-gradient(135deg, #0a1428 0%, #13253f 100%);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      font-size: 22px;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 40px;
+    }
+
+    .btn {
+      background: var(--green);
+      color: #000;
+      padding: 16px 40px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00ffbb;
+      transform: translateY(-4px);
+    }
+
+    .section {
+      padding: 100px 0;
+    }
+
+    .section h2 {
+      font-size: 42px;
+      text-align: center;
+      margin-bottom: 60px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 40px 30px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      transition: 0.4s;
+    }
+
+    .card:hover {
+      border-color: var(--green);
+      transform: translateY(-10px);
+    }
+
+    .card h3 {
+      color: var(--green);
+      margin: 20px 0 15px;
+      font-size: 26px;
+    }
+
+    footer {
+      background: #050a14;
+      padding: 60px 0 30px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .float-buttons {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 999;
+    }
+
+    .float-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .whatsapp-btn { background: #25d366; }
+    .call-btn { background: #22c55e; }
+    .email-btn { background: var(--green); }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 38px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 0 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <img src="logo.png" alt="Alarmonix">
+      </div>
+      <nav class="nav-links">
+        <a href="#services">Usługi</a>
+        <a href="#projects">Realizacje</a>
+        <a href="#calculator">Kalkulator</a>
+        <a href="#contact">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Bezpieczeństwo Twojego biznesu<br>na najwyższym poziomie</h1>
+      <p>Profesjonalny montaż systemów monitoringu CCTV, alarmowych oraz kontroli dostępu na terenie całej Polski</p>
+      <a href="#contact" class="btn">Zamów bezpłatną wycenę</a>
+    </div>
+  </section>
+
+  <!-- Остальной контент можешь оставить из своего предыдущего кода или сказать, чтобы я добавил калькулятор, услуги и т.д. -->
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Alarmonix — Systemy Bezpieczeństwa</p>
+      <p>Katowice • Cała Polska</p>
+    </div>
+  </footer>
+
+  <div class="float-buttons">
+    <a href="https://wa.me/48888888888" class="float-btn whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="tel:+48888888888" class="float-btn call-btn"><i class="fas fa-phone-alt"></i></a>
+    <a href="mailto:alarmonix@gmail.com" class="float-btn email-btn"><i class="fas fa-envelope"></i></a>
+  </div>
+
+</body>
+</html>
