@@ -286,7 +286,7 @@
         offerDiv.style.width = '800px';
         offerDiv.innerHTML = `...`; // (treść oferty)
         document.body.appendChild(offerDiv);
-        await new Promise(resolve => setTimeout(resolve, 400)); // <--- SZUKAJ TEJ LINII
+        await new Promise(resolve => setTimeout(resolve, 1400)); // <--- SZUKAJ TEJ LINII
         const opt = { margin: [0.5,0.5,0.5,0.5], filename: `oferta_alarmonix_${new Date().toISOString().slice(0,19)}.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, logging: false }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } };
         await html2pdf().set(opt).from(offerDiv).save();
         document.body.removeChild(offerDiv);
