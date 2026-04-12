@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Alarmonix | Monitoring | Alarmy | CCTV Polska</title>
+  <meta name="description" content="Alarmonix - monitoring, alarmy, CCTV oraz kontrola dostępu. Profesjonalne systemy bezpieczeństwa.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="https://faviconkit.com/images/favicon-144.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg-dark: #0a0f14; --bg-card: #0e1620; --primary: #4da3ff; --primary-hover: #2f8cff; --text-light: #eaf2f9; --text-muted: #8ea2b6; --border-color: #182330; --border-light: #1a2633; --success: #22c55e; --whatsapp: #25d366; --transition: all 0.3s ease; }
+    body { background: var(--bg-dark); color: var(--text-light); font-family: 'Inter', sans-serif; line-height: 1.5; }
+    html { scroll-behavior: smooth; }
+    .container { max-width: 1350px; margin: 0 auto; padding: 0 25px; }
+    header { background: #0b1117; border-bottom: 1px solid var(--border-light); position: sticky; top: 0; z-index: 1000; }
+    .nav { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 15px 0; gap: 15px; }
+    .logo { cursor: pointer; }
+    .logo img { height: 90px; width: auto; filter: brightness(1.3) drop-shadow(0 2px 5px rgba(0,0,0,0.5)); transition: var(--transition); }
+    .logo img:hover { filter: brightness(1.6); transform: scale(1.02); }
+    .nav-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+    .nav-links a { color: #c6d0da; text-decoration: none; font-weight: 600; font-size: 1rem; padding: 8px 12px; transition: var(--transition); border-radius: 12px; background: transparent; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(77, 163, 255, 0.1); }
+    .hero { padding: 120px 20px; background: radial-gradient(circle at 10% 30%, #13202e, var(--bg-dark)); text-align: left; }
+    .hero h1 { font-size: 52px; margin-bottom: 20px; max-width: 900px; font-weight: 800; line-height: 1.2; }
+    .hero p { color: var(--text-muted); font-size: 20px; margin-bottom: 30px; max-width: 800px; line-height: 1.5; }
+    .btn, button:not(.close-contact):not(.copy-btn):not(.reset-btn), .file-label, #downloadPDFBtn, .contact-float button[type="submit"] {
+      background: var(--primary); padding: 14px 32px; border-radius: 12px; text-decoration: none; color: white; font-weight: 600; display: inline-block; transition: var(--transition); border: none; cursor: pointer; font-size: 16px; text-align: center;
+    }
+    .reset-btn { background: #dc2626; padding: 14px 32px; border-radius: 12px; text-decoration: none; color: white; font-weight: 600; display: inline-block; transition: var(--transition); border: none; cursor: pointer; font-size: 16px; text-align: center; }
+    .reset-btn:hover { background: #b91c1c; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(220,38,38,0.2); }
+    .btn:hover, button:hover:not(.close-contact):not(.copy-btn):not(.reset-btn), .file-label:hover, #downloadPDFBtn:hover, .contact-float button[type="submit"]:hover {
+      background: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(77,163,255,0.2);
+    }
+    .copy-btn { background: var(--primary); padding: 6px 12px; border-radius: 12px; color: white; font-weight: 600; font-size: 12px; border: none; cursor: pointer; margin-left: 10px; transition: var(--transition); }
+    .copy-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .section { padding: 80px 0; border-bottom: 1px solid var(--border-color); }
+    .section h2 { font-size: 36px; margin-bottom: 20px; font-weight: 700; }
+    .muted { color: var(--text-muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; overflow: visible; }
+    .card { background: var(--bg-card); padding: 30px; border-radius: 18px; border: 1px solid var(--border-color); transition: var(--transition); cursor: pointer; transform-origin: center center; }
+    .card:hover { border-color: var(--primary); transform: translateY(-6px); box-shadow: 0 20px 30px -15px rgba(0,0,0,0.3); }
+    .card-icon { font-size: 40px; color: var(--primary); margin-bottom: 20px; transition: transform 0.2s; }
+    .card h3 { margin-bottom: 15px; font-size: 24px; }
+    .card.expanded { transform: scale(1.02); border-color: var(--primary); box-shadow: 0 25px 35px -12px rgba(77,163,255,0.3); background: linear-gradient(145deg,#101a24,#0b1117); z-index: 10; }
+    .card-details { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+    .card.expanded .card-details { display: block; animation: fadeSlideUp 0.4s ease; }
+    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+    .gallery img { width: 100%; border-radius: 14px; border: 1px solid var(--border-color); transition: var(--transition); aspect-ratio: 16 / 9; object-fit: cover; }
+    .gallery img:hover { transform: scale(1.02); border-color: var(--primary); }
+    .faq-item { padding: 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
+    .faq-item h3 { margin-bottom: 10px; font-size: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .faq-item h3 i { transition: transform 0.3s; }
+    .faq-item.active h3 i { transform: rotate(180deg); }
+    .faq-answer { display: none; margin-top: 10px; color: var(--text-muted); line-height: 1.5; }
+    .faq-item.active .faq-answer { display: block; animation: fadeSlideDown 0.3s ease; }
+    @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .calculator { background: var(--bg-dark); }
+    .calc-horizontal { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 30px; }
+    .calc-column { flex: 1; min-width: 250px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px; }
+    .calc-column h3 { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); font-size: 20px; display: flex; align-items: center; gap: 10px; color: var(--primary); }
+    .calc-field { margin-bottom: 15px; }
+    .calc-field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+    .calc-field input, .calc-field select { width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-light); font-size: 14px; }
+    .total-price { font-size: 32px; font-weight: 800; color: var(--primary); margin: 30px 0 15px; text-align: center; }
+    .price-note { font-size: 14px; color: var(--text-muted); text-align: center; margin-bottom: 20px; }
+    .button-group { display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+    .contact-float { position: fixed; width: 320px; background: rgba(10,15,20,0.12); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 20px; padding: 0; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: opacity 0.3s ease, visibility 0.3s ease; cursor: move; display: none; opacity: 1; visibility: visible; }
+    .contact-float.fade-out { opacity: 0; visibility: hidden; }
+    .contact-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(0,0,0,0.2); border-radius: 20px 20px 0 0; cursor: move; border-bottom: 1px solid var(--border-color); }
+    .contact-header h3 { margin: 0; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    .close-contact { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 0; margin: 0; transform: none; box-shadow: none; }
+    .close-contact:hover { color: var(--primary); background: none; transform: none; }
+    .contact-body { padding: 15px; cursor: default; }
+    .contact-float form { display: flex; flex-direction: column; gap: 10px; margin: 0; }
+    .contact-float input, .contact-float textarea, .contact-float select { padding: 10px; font-size: 14px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-light); }
+    .contact-float button[type="submit"] { padding: 10px; font-size: 14px; }
+    .file-input-wrapper { position: relative; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .file-input-wrapper input[type="file"] { display: none; }
+    .file-label { background: var(--primary); padding: 8px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 12px; cursor: pointer; transition: var(--transition); display: inline-block; text-align: center; border: none; }
+    .file-label:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 5px 10px rgba(77,163,255,0.2); }
+    .file-name { font-size: 11px; color: var(--text-muted); }
+    .contact-float .error-message, .contact-float #form-status { font-size: 12px; }
+    .float-buttons { position: fixed; bottom: 20px; right: 90px; display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+    .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; text-decoration: none; transition: var(--transition); box-shadow: 0 4px 10px rgba(0,0,0,0.3); background: var(--primary); }
+    .float-btn:hover { transform: scale(1.1); background: var(--primary-hover); }
+    .call-btn { background: var(--success); }
+    .whatsapp-btn { background: var(--whatsapp); }
+    .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background: #0b1117; border-top: 1px solid var(--primary); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; z-index: 1100; font-size: 14px; transform: translateY(100%); transition: transform 0.3s ease; }
+    .cookie-banner.show { transform: translateY(0); }
+    .cookie-banner button { background: var(--primary); border: none; padding: 8px 20px; border-radius: 30px; color: white; cursor: pointer; font-weight: 600; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+    .modal-content { background: var(--bg-card); border: 1px solid var(--primary); border-radius: 24px; max-width: 900px; max-height: 85vh; overflow-y: auto; padding: 30px; position: relative; margin: 20px; color: var(--text-light); }
+    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; }
+    footer { border-top: 1px solid var(--border-color); padding: 40px 0 30px; }
+    .footer-contacts { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+    .footer-contacts .contact-block { flex: 1; min-width: 200px; }
+    .footer-contacts .contact-block h4 { font-size: 18px; margin-bottom: 15px; color: var(--primary); }
+    .footer-contacts .contact-block p { margin-bottom: 8px; color: var(--text-muted); }
+    .footer-contacts .contact-block i { width: 25px; color: var(--primary); }
+    .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 14px; }
+    @media (max-width: 992px) { .hero h1 { font-size: 42px; } .section h2 { font-size: 30px; } .calc-column { min-width: 100%; } .logo img { height: 70px; } }
+    @media (max-width: 768px) { .nav-links { display: flex; width: auto; position: static; background: transparent; padding: 0; margin-top: 0; flex-direction: row; } .hero { padding: 80px 20px; } .hero h1 { font-size: 32px; } .hero p { font-size: 18px; } .float-buttons { right: 80px; } .float-btn { width: 45px; height: 45px; font-size: 20px; } .grid { gap: 20px; } .card { padding: 20px; } .contact-float { width: calc(100% - 40px); left: 20px !important; right: 20px; } .button-group { flex-direction: column; align-items: center; } .footer-contacts { flex-direction: column; text-align: center; } .footer-contacts .contact-block i { width: auto; margin-right: 8px; } .logo img { height: 55px; } }
+    @media (max-width: 480px) { .container { padding: 0 15px; } .hero h1 { font-size: 28px; } .btn, button:not(.close-contact):not(.copy-btn):not(.reset-btn), .file-label, #downloadPDFBtn, .reset-btn { padding: 12px 24px; } .logo img { height: 45px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo" id="logoHome">
+        <img src="logo.png" alt="Alarmonix">
+      </div>
+      <nav class="nav-links">
+        <a href="#services">Usługi</a>
+        <a href="#projects">Realizacje</a>
+        <a href="#faq">FAQ</a>
+        <a href="#calculator">Kalkulator</a>
+        <a href="#" id="showContactMenuBtn">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Profesjonalne systemy bezpieczeństwa.</h1>
+        <p>Projektujemy, instalujemy i obsługujemy systemy monitoringu CCTV, alarmy antywłamaniowe oraz kontrolę dostępu. Ochrona mienia, nadzór nad pracownikami, szybkie powiadomienia o zagrożeniu – dostosujemy rozwiązanie do Twoich potrzeb. Każda instalacja jest projektowana indywidualnie – z myślą o skutecznej ochronie i łatwej obsłudze. Doświadczenie, rzetelność i wsparcie na każdym etapie.</p>
+        <a class="btn" href="#" id="showContactMenuBtn">Darmowa wycena</a>
+      </div>
+    </section>
+
+    <section class="section" id="services"><div class="container"><h2>Usługi</h2><div class="grid">
+      <div class="card animate-on-scroll"><div class="card-icon"><i class="fas fa-video"></i></div><h3>Monitoring CCTV</h3><p class="muted">Instalacja kamer IP, analogowych oraz rejestratorów z analityką.</p><div class="card-details">Oferujemy profesjonalny monitoring CCTV z kamerami o wysokiej rozdzielczości, nocną wizją, detekcją ruchu i zdalnym podglądem przez aplikację. Rejestratory z funkcją analityki AI, nagrywanie w chmurze i lokalnie.</div></div>
+      <div class="card animate-on-scroll"><div class="card-icon"><i class="fas fa-bell"></i></div><h3>Systemy alarmowe</h3><p class="muted">Bezprzewodowe i przewodowe systemy antywłamaniowe.</p><div class="card-details">Systemy alarmowe – bezprzewodowe i przewodowe, z powiadomieniami push, syrenami zewnętrznymi i integracją z monitoringiem. Sterowanie przez aplikację, monitoring 24/7.</div></div>
+      <div class="card animate-on-scroll"><div class="card-icon"><i class="fas fa-id-card"></i></div><h3>Kontrola dostępu</h3><p class="muted">Systemy RFID, biometria, rozpoznawanie twarzy.</p><div class="card-details">Kontrola dostępu RFID, czytniki kart, kody PIN, biometria odcisków palców. Zdalne zarządzanie uprawnieniami, logowanie wejść i wyjść, integracja z systemami rejestracji czasu pracy.</div></div>
+      <div class="card animate-on-scroll"><div class="card-icon"><i class="fas fa-phone-alt"></i></div><h3>Wideodomofony</h3><p class="muted">Nowoczesne instalacje z aplikacją mobilną.</p><div class="card-details">Nowoczesne wideodomofony z kolorowym ekranem dotykowym, aplikacją mobilną, możliwością otwierania bramy i furtki z telefonu. Obsługa wielu użytkowników, nagrywanie zdarzeń.</div></div>
+      <div class="card animate-on-scroll"><div class="card-icon"><i class="fas fa-tools"></i></div><h3>Serwis</h3><p class="muted">Modernizacje, naprawy i przeglądy systemów.</p><div class="card-details">Przeglądy, konserwacja, naprawy systemów bezpieczeństwa. Szybka interwencja, umowy serwisowe, modernizacja przestarzałych instalacji do najnowszych standardów.</div></div>
+    </div></div></section>
+
+    <section class="section" id="projects"><div class="container"><h2>Realizacje</h2><p class="muted">Przykładowe obiekty.</p><div class="grid gallery">
+      <img src="images/monitoring1.webp" alt="Monitoring biura" loading="lazy" class="animate-on-scroll">
+      <img src="images/monitoring2.webp" alt="Kamery na zewnątrz budynku" loading="lazy" class="animate-on-scroll">
+      <img src="images/monitoring3.webp" alt="Centrum kontroli dostępu" loading="lazy" class="animate-on-scroll">
+    </div></div></section>
+
+    <section class="section" id="faq"><div class="container"><h2>FAQ</h2><div class="faq">
+      <div class="faq-item"><h3>Ile kosztuje? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Wycena jest darmowa. Cena zależy od indywidualnych potrzeb – ilości kamer, czujników, rodzaju obiektu. Skontaktuj się z nami, aby uzyskać ofertę.</p></div></div>
+      <div class="faq-item"><h3>Czas realizacji? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Zazwyczaj od jednego dnia w zależności od skali projektu. Dla małych instalacji 1-2 dni, dla większych obiektów do 2 tygodni.</p></div></div>
+      <div class="faq-item"><h3>Obszar działania? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Cała Polska – realizujemy zlecenia zarówno lokalnie, jak i ogólnokrajowo. Dojeżdżamy do klienta.</p></div></div>
+      <div class="faq-item"><h3>Jaka jest gwarancja? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Na sprzęt 24 miesiące, na montaż 12 miesięcy. Dla stałych klientów oferujemy przedłużoną gwarancję.</p></div></div>
+      <div class="faq-item"><h3>Czy oferujecie serwis pogwarancyjny? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Tak, oferujemy umowy serwisowe na przeglądy i naprawy. Koszt od 300 zł/rok dla małych systemów.</p></div></div>
+    </div></div></section>
+
+    <section class="section calculator" id="calculator">
+      <div class="container">
+        <h2>Kalkulator orientacyjnej wyceny</h2>
+        <p class="muted">Wybierz interesujące Cię systemy i wprowadź parametry. Ceny są orientacyjne (netto) i uwzględniają sprzęt oraz montaż.</p>
+        <div class="calc-horizontal">
+          <div class="calc-column"><h3><i class="fas fa-bell"></i> System alarmowy</h3><div class="calc-field"><label>Czujniki ruchu (PIR)</label><input type="number" id="motionSensors" value="0" min="0"></div><div class="calc-field"><label>Kontaktrony (drzwi/okna)</label><input type="number" id="doors" value="0" min="0"></div><div class="calc-field"><label>Klawiatury sterujące</label><input type="number" id="keypads" value="0" min="0"></div></div>
+          <div class="calc-column"><h3><i class="fas fa-video"></i> Monitoring CCTV</h3><div class="calc-field"><label>Kamery zewnętrzne</label><input type="number" id="camOut" value="0" min="0"></div><div class="calc-field"><label>Kamery wewnętrzne</label><input type="number" id="camIn" value="0" min="0"></div><div class="calc-field"><label>Dni przechowywania</label><input type="number" id="storageDays" value="7" min="1" step="1"></div><div class="calc-field"><label>Rejestrator</label><select id="recorderType"><option value="8">Do 8 kanałów</option><option value="16">16+ kanałów</option></select></div></div>
+          <div class="calc-column"><h3><i class="fas fa-id-card"></i> Kontrola dostępu</h3><div class="calc-field"><label>Liczba drzwi</label><input type="number" id="accessDoors" value="0" min="0"></div><div class="calc-field"><label>Typ identyfikacji</label><select id="accessType"><option value="rfid">RFID (karty/breloki)</option><option value="biometric">Biometria (odcisk palca)</option><option value="face">Rozpoznawanie twarzy</option><option value="pin">Kod (PIN)</option></select></div><div class="calc-field"><label>Rejestracja czasu pracy (RCP)</label><select id="timeTracking"><option value="0">Nie</option><option value="1">Tak</option></select></div><div class="calc-field"><label>Integracja z CCTV</label><select id="cctvIntegration"><option value="0">Nie</option><option value="1">Tak</option></select></div></div>
+        </div>
+        <div class="total-price">Szacunkowa cena całkowita: <span id="totalPrice">0</span> zł netto</div>
+        <div class="price-note">* Ceny orientacyjne, netto. Ostateczna wycena po bezpłatnej wizycie technika.</div>
+        <div class="button-group"><button id="downloadPDFBtn">Pobierz ofertę (PDF)</button><button id="resetCalculatorBtn" class="reset-btn">Resetuj wszystko</button></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-contacts">
+        <div class="contact-block">
+          <h4><i class="fas fa-map-marker-alt"></i> Adres</h4>
+          <p>Alarmonix</p>
+          <p>Katowice, ul. Przykładowa 10</p>
+          <p>40-001 Katowice</p>
+        </div>
+        <div class="contact-block">
+          <h4><i class="fas fa-phone-alt"></i> Kontakt</h4>
+          <p><i class="fas fa-phone"></i> +48 888 888 888</p>
+          <p><i class="fas fa-envelope"></i> alarmonix@gmail.com</p>
+        </div>
+        <div class="contact-block">
+          <h4><i class="fas fa-clock"></i> Godziny otwarcia</h4>
+          <p>Poniedziałek – Piątek: 9:00 – 18:00</p>
+          <p>Sobota: po wcześniejszym uzgodnieniu</p>
+          <p>Niedziela: nieczynne</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Alarmonix | <a href="#" id="openPrivacyBtn">Polityka prywatności</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="contactFloat" class="contact-float" style="top: 100px; right: 20px; left: auto; display: none;">
+    <div class="contact-header" id="contactHeader"><h3><i class="fas fa-envelope"></i> Kontakt</h3><button class="close-contact" id="closeContactBtn">&times;</button></div>
+    <div class="contact-body"><form id="contact-form" enctype="multipart/form-data"><input type="text" name="name" placeholder="Imię i nazwisko" required autocomplete="name"><input type="tel" name="phone" id="phone" placeholder="Telefon (opcjonalnie)" autocomplete="tel"><input type="email" name="email" id="email" placeholder="Email (opcjonalnie)" autocomplete="email"><textarea name="message" id="message" rows="3" placeholder="Opisz projekt (opcjonalnie)"></textarea><div class="file-input-wrapper"><label for="fileAttachment" class="file-label">Wybierz plik</label><input type="file" name="attachment" id="fileAttachment" autocomplete="off"><span class="file-name" id="file-name-display">Nie wybrano pliku</span></div><button type="submit">Wyślij wiadomość</button><div id="form-errors" class="error-message"></div><div id="form-status" class="muted"></div></form></div></div>
+
+  <div class="float-buttons"><a class="float-btn email-btn" href="mailto:alarmonix@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a><a class="float-btn call-btn" href="tel:+48888888888" aria-label="Zadzwoń"><i class="fas fa-phone-alt"></i></a><a class="float-btn whatsapp-btn" href="https://wa.me/48888888888" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></div>
+
+  <div id="privacyModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h2>Polityka prywatności</h2><p><strong>1. POSTANOWIENIA OGÓLNE</strong></p><p>1.1. Niniejsza polityka prywatności strony internetowej www.alarmonix.pl (dalej Strona Internetowa) ma charakter informacyjny... (pełna treść)</p><p><strong>2. CELE PRZETWARZANIA</strong></p><p>Dane przetwarzane są w celach: wykonania umowy, marketingu bezpośredniego, księgowości, obrony roszczeń, obsługi zapytań.</p><p><strong>3. PRAWA UŻYTKOWNIKA</strong></p><p>Przysługuje prawo dostępu, sprostowania, usunięcia, ograniczenia, przenoszenia, sprzeciwu oraz cofnięcia zgody. Kontakt: alarmonix@gmail.com.</p><p><strong>4. COOKIES</strong></p><p>Strona używa plików cookies w celach analitycznych i remarketingowych.</p><p><em>Polityka obowiązuje od 11 kwietnia 2026 r.</em></p></div></div>
+
+  <div id="cookieBanner" class="cookie-banner"><p>Ta strona używa plików cookies w celu zapewnienia wygody i analizy ruchu. Klikając „Akceptuję”, wyrażasz zgodę na ich użycie.</p><button id="acceptCookies">Akceptuję</button></div>
+
+  <script>
+    (function() {
+      const BOT_TOKEN = '8604032454:AAEb-3_zI7Xkn9YhMTb9Un0mqrPTGetAQsM';
+      const CHAT_ID = '887432856';
+
+      // Logo click - reload page to initial state
+      document.getElementById('logoHome').addEventListener('click', () => {
+        window.location.href = window.location.pathname;
+      });
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', () => {
+          item.classList.toggle('active');
+        });
+      });
+
+      const sections = document.querySelectorAll('section[id]');
+      const navItems = document.querySelectorAll('.nav-links a');
+      function setActive() {
+        let scroll = window.scrollY + 120;
+        sections.forEach(sec => {
+          const top = sec.offsetTop, bottom = top + sec.offsetHeight;
+          if (scroll >= top && scroll < bottom) {
+            const id = sec.getAttribute('id');
+            navItems.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+            });
+          }
+        });
+      }
+      window.addEventListener('scroll', setActive);
+      setActive();
+
+      const animateElements = document.querySelectorAll('.animate-on-scroll');
+      function checkVisibility() {
+        animateElements.forEach(el => {
+          if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible');
+        });
+      }
+      window.addEventListener('scroll', checkVisibility);
+      checkVisibility();
+
+      const cookieBanner = document.getElementById('cookieBanner');
+      const acceptBtn = document.getElementById('acceptCookies');
+      if (!localStorage.getItem('cookiesAccepted')) setTimeout(() => cookieBanner.classList.add('show'), 500);
+      acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookiesAccepted', 'true');
+        cookieBanner.classList.remove('show');
+      });
+
+      const PRICE_PIR_SENSOR = 120, PRICE_CONTACT = 40, PRICE_BASE_PANEL = 600, PRICE_BASE_KEYPAD = 300, PRICE_EXTRA_KEYPAD = 300;
+      const INSTALL_SETUP = 600, INSTALL_PIR = 110, INSTALL_CONTACT = 80, INSTALL_KEYPAD_EXTRA = 100;
+      const PRICE_OUTDOOR_CAM = 750, PRICE_INDOOR_CAM = 500, PRICE_NVR_8 = 1200, PRICE_NVR_16 = 2600, PRICE_EXTRA_STORAGE_DAY = 15;
+      const ACCESS_PRICE_PER_DOOR = { rfid: 3800, biometric: 5500, face: 8000, pin: 2300 };
+      const ACCESS_RCP_COST = 2000, ACCESS_CCTV_INTEGRATION = 1800;
+
+      function getNumber(id, def=0) { let v = parseInt(document.getElementById(id)?.value); return isNaN(v)?def:v; }
+      function calculateAlarmPrice() { let motion=getNumber('motionSensors'), doors=getNumber('doors'), keypads=getNumber('keypads'); if(keypads===0) return 0; let equip=PRICE_BASE_PANEL+PRICE_BASE_KEYPAD+(keypads-1)*PRICE_EXTRA_KEYPAD+motion*PRICE_PIR_SENSOR+doors*PRICE_CONTACT; let install=INSTALL_SETUP+motion*INSTALL_PIR+doors*INSTALL_CONTACT+(keypads-1)*INSTALL_KEYPAD_EXTRA; return equip+install; }
+      function calculateCCTVPrice() { let camOut=getNumber('camOut'), camIn=getNumber('camIn'), days=getNumber('storageDays',1); let rec=document.getElementById('recorderType').value; let nvr=(rec==='8')?PRICE_NVR_8:PRICE_NVR_16; let price=camOut*PRICE_OUTDOOR_CAM+camIn*PRICE_INDOOR_CAM; if(camOut+camIn>0){ price+=nvr; if(days>7) price+=(days-7)*PRICE_EXTRA_STORAGE_DAY; } return price; }
+      function calculateAccessPrice() { let doors=getNumber('accessDoors'); if(doors<1) return 0; let type=document.getElementById('accessType').value; let pricePerDoor=ACCESS_PRICE_PER_DOOR[type]||ACCESS_PRICE_PER_DOOR.rfid; let total=doors*pricePerDoor; if(document.getElementById('timeTracking').value==='1') total+=ACCESS_RCP_COST; if(document.getElementById('cctvIntegration').value==='1') total+=ACCESS_CCTV_INTEGRATION; return total; }
+      function updateTotal() { let total=calculateAlarmPrice()+calculateCCTVPrice()+calculateAccessPrice(); document.getElementById('totalPrice').innerText=total.toLocaleString('pl-PL'); }
+      function resetCalculator() {
+        document.getElementById('motionSensors').value=0; document.getElementById('doors').value=0; document.getElementById('keypads').value=0;
+        document.getElementById('camOut').value=0; document.getElementById('camIn').value=0; document.getElementById('storageDays').value=7;
+        document.getElementById('recorderType').value='8'; document.getElementById('accessDoors').value=0; document.getElementById('accessType').value='rfid';
+        document.getElementById('timeTracking').value='0'; document.getElementById('cctvIntegration').value='0'; updateTotal();
+      }
+      const allInputs=['motionSensors','doors','keypads','camOut','camIn','storageDays','recorderType','accessDoors','accessType','timeTracking','cctvIntegration'];
+      allInputs.forEach(id=>{ let el=document.getElementById(id); if(el) el.addEventListener('input',updateTotal); }); updateTotal();
+      document.getElementById('resetCalculatorBtn').addEventListener('click',resetCalculator);
+
+      document.getElementById('downloadPDFBtn').addEventListener('click', async function() {
+        const btn=this; const originalText=btn.innerHTML; btn.innerHTML='Generowanie PDF...'; btn.disabled=true;
+        try {
+          const motion=getNumber('motionSensors'), doors=getNumber('doors'), keypads=getNumber('keypads');
+          const camOut=getNumber('camOut'), camIn=getNumber('camIn'), storageDays=getNumber('storageDays',1);
+          const recType=document.getElementById('recorderType').value==='8'?'do 8 kanałów':'16+ kanałów';
+          const accessDoors=getNumber('accessDoors');
+          const accessTypeText=document.getElementById('accessType').options[document.getElementById('accessType').selectedIndex].text;
+          const rcp=document.getElementById('timeTracking').value==='1'?'Tak':'Nie';
+          const cctvInt=document.getElementById('cctvIntegration').value==='1'?'Tak':'Nie';
+          const totalPrice=(calculateAlarmPrice()+calculateCCTVPrice()+calculateAccessPrice()).toLocaleString('pl-PL');
+          const dateStr=new Date().toLocaleDateString('pl-PL');
+          const element=document.createElement('div');
+          element.style.position='absolute'; element.style.left='-9999px'; element.style.top='0'; element.style.width='800px';
+          element.style.backgroundColor='white'; element.style.padding='40px'; element.style.fontFamily="'Inter', 'Arial', sans-serif"; element.style.color='#000';
+          element.innerHTML=`<div style="max-width:100%; margin:0 auto;"><div style="text-align:center; margin-bottom:30px; border-bottom:2px solid #4da3ff; padding-bottom:20px;"><img src="logo2.png" alt="Alarmonix" style="height:60px; width:auto; margin-bottom:10px;"><div style="color:#1e293b; font-size:14px;">Systemy bezpieczeństwa | montaż | serwis</div></div><div style="text-align:right; color:#475569; margin-bottom:20px;">Katowice, ${dateStr}</div><div style="font-size:24px; font-weight:700; margin:20px 0 10px; color:#0f172a;">Oferta handlowa nr ${Math.floor(Math.random()*10000)}</div><p>Szanowni Państwo,</p><p>Na podstawie Państwa zapytania przygotowaliśmy orientacyjną wycenę systemu bezpieczeństwa. Poniższe ceny są netto i obejmują sprzęt, montaż oraz konfigurację.</p><table style="width:100%; border-collapse:collapse; margin:20px 0;"><thead><tr style="background:#f1f5f9;"><th style="border:1px solid #cbd5e1; padding:10px; text-align:left;">System</th><th style="border:1px solid #cbd5e1; padding:10px; text-align:left;">Szczegóły</th><th style="border:1px solid #cbd5e1; padding:10px; text-align:left;">Wartość (zł netto)</th></tr></thead><tbody>${(keypads>0||motion>0||doors>0)?`<tr><td style="border:1px solid #cbd5e1; padding:10px;"><strong>System alarmowy</strong></td><td style="border:1px solid #cbd5e1; padding:10px;">Czujniki ruchu: ${motion} szt.<br>Kontaktrony: ${doors} szt.<br>Klawiatury: ${keypads} szt.</td><td style="border:1px solid #cbd5e1; padding:10px;">${calculateAlarmPrice().toLocaleString('pl-PL')}NonNull<\/td><\/tr>`:''}${(camOut+camIn>0)?`<tr><td style="border:1px solid #cbd5e1; padding:10px;"><strong>Monitoring CCTV</strong></td><td style="border:1px solid #cbd5e1; padding:10px;">Kamery zewnętrzne: ${camOut} szt.<br>Kamery wewnętrzne: ${camIn} szt.<br>Dni przechowywania: ${storageDays}<br>Rejestrator: ${recType}NonNull<\/td><td style="border:1px solid #cbd5e1; padding:10px;">${calculateCCTVPrice().toLocaleString('pl-PL')}NonNull<\/td><\/tr>`:''}${(accessDoors>0)?`<tr><td style="border:1px solid #cbd5e1; padding:10px;"><strong>Kontrola dostępu</strong></td><td style="border:1px solid #cbd5e1; padding:10px;">Liczba drzwi: ${accessDoors}<br>Technologia: ${accessTypeText}<br>RCP: ${rcp}<br>Integracja z CCTV: ${cctvInt}NonNull<\/td><td style="border:1px solid #cbd5e1; padding:10px;">${calculateAccessPrice().toLocaleString('pl-PL')}NonNull<\/td><\/tr>`:''}</tbody><td><div style="font-size:22px; font-weight:800; text-align:right; margin:20px 0; padding-top:15px; border-top:2px solid #4da3ff;">Razem (netto): ${totalPrice} zł</div><p style="font-size:14px; color:#475569;">* Do ceny należy doliczyć 23% VAT. Oferta ważna 30 dni. Ostateczna cena może ulec zmianie po wizji lokalnej.</p><div style="margin-top:30px; text-align:right; font-style:italic;">Z poważaniem,<br>Zespół Alarmonix<br>tel. +48 888 888 888 | alarmonix@gmail.com</div><div style="margin-top:40px; font-size:12px; text-align:center; color:#64748b; border-top:1px solid #e2e8f0; padding-top:20px;">Alarmonix Sp. z o.o. | Katowice, ul. Przykładowa 10 | NIP: 5833413237</div></div>`;
+          document.body.appendChild(element);
+          await new Promise(resolve=>setTimeout(resolve,500));
+          const canvas=await html2canvas(element,{scale:3,backgroundColor:'#ffffff',logging:false});
+          const imgData=canvas.toDataURL('image/jpeg',1.0);
+          const {jsPDF}=window.jspdf; const pdf=new jsPDF('p','mm','a4'); const imgWidth=210; const pageHeight=297;
+          const imgHeight=(canvas.height*imgWidth)/canvas.width; let heightLeft=imgHeight; let position=0;
+          pdf.addImage(imgData,'JPEG',0,position,imgWidth,imgHeight); heightLeft-=pageHeight;
+          while(heightLeft>0){ position=heightLeft-imgHeight; pdf.addPage(); pdf.addImage(imgData,'JPEG',0,position,imgWidth,imgHeight); heightLeft-=pageHeight; }
+          pdf.save(`oferta_alarmonix_${new Date().toISOString().slice(0,19)}.pdf`);
+          document.body.removeChild(element);
+        } catch(err){ console.error('PDF error:',err); alert('Wystąpił błąd podczas generowania PDF. Spróbuj ponownie.'); }
+        finally{ btn.innerHTML=originalText; btn.disabled=false; }
+      });
+
+      const contactFloat=document.getElementById('contactFloat'); const contactHeader=document.getElementById('contactHeader');
+      let isDragging=false, offsetX, offsetY;
+      contactHeader.addEventListener('mousedown',(e)=>{ if(e.target.classList.contains('close-contact')) return; isDragging=true; offsetX=e.clientX-contactFloat.offsetLeft; offsetY=e.clientY-contactFloat.offsetTop; contactFloat.style.cursor='grabbing'; e.preventDefault(); });
+      window.addEventListener('mousemove',(e)=>{ if(!isDragging) return; let left=e.clientX-offsetX, top=e.clientY-offsetY; const maxX=window.innerWidth-contactFloat.offsetWidth, maxY=window.innerHeight-contactFloat.offsetHeight; left=Math.min(Math.max(left,10),maxX); top=Math.min(Math.max(top,10),maxY); contactFloat.style.left=left+'px'; contactFloat.style.right='auto'; contactFloat.style.top=top+'px'; });
+      window.addEventListener('mouseup',()=>{ isDragging=false; contactFloat.style.cursor=''; });
+
+      const closeContactBtn=document.getElementById('closeContactBtn');
+      const showContactBtns = document.querySelectorAll('#showContactMenuBtn');
+      function showContactForm(){ contactFloat.style.display='block'; contactFloat.classList.remove('fade-out'); }
+      function hideContactForm(){ contactFloat.classList.add('fade-out'); setTimeout(()=>{ if(contactFloat.classList.contains('fade-out')) contactFloat.style.display='none'; },300); }
+      closeContactBtn.addEventListener('click',hideContactForm);
+      showContactBtns.forEach(btn => {
+        btn.addEventListener('click',(e)=>{ e.preventDefault(); showContactForm(); });
+      });
+
+      const fileInput=document.getElementById('fileAttachment'); const fileNameSpan=document.getElementById('file-name-display');
+      fileInput.addEventListener('change',function(){ fileNameSpan.textContent=this.files&&this.files.length>0?this.files[0].name:'Nie wybrano pliku'; });
+
+      async function sendToTelegram(formData,requestId){
+        const name=formData.get('name')||'brak', phone=formData.get('phone')||'brak', email=formData.get('email')||'brak', messageText=formData.get('message')||'brak', file=formData.get('attachment');
+        let text=`📩 *Nowa wiadomość ze strony Alarmonix*\n\n🆔 *Numer zgłoszenia:* ${requestId}\n👤 *Imię i nazwisko:* ${name}\n📞 *Telefon:* ${phone}\n📧 *Email:* ${email}\n💬 *Wiadomość:* ${messageText}\n📎 *Plik:* ${file?file.name:'brak'}`;
+        const textUrl=`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`; const textPayload={chat_id:CHAT_ID,text:text,parse_mode:'Markdown'};
+        try{
+          let textResponse=await fetch(textUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(textPayload)});
+          if(!textResponse.ok) throw new Error('Błąd wysyłania wiadomości tekstowej');
+          if(file&&file.size>0){ const fileFormData=new FormData(); fileFormData.append('chat_id',CHAT_ID); fileFormData.append('document',file,file.name); const fileUrl=`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`; const fileResponse=await fetch(fileUrl,{method:'POST',body:fileFormData}); if(!fileResponse.ok) throw new Error('Błąd wysyłania pliku'); }
+          return true;
+        } catch(err){ console.error('Telegram error:',err); return false; }
+      }
+
+      const contactForm=document.getElementById('contact-form'); const statusDiv=document.getElementById('form-status');
+      contactForm.addEventListener('submit',async(e)=>{ e.preventDefault(); const fd=new FormData(contactForm); const requestId='REQ-'+Date.now(); const success=await sendToTelegram(fd,requestId); statusDiv.innerHTML=''; const messageSpan=document.createElement('span'); if(success){ messageSpan.textContent='✅ Dziękujemy! Twoja wiadomość została wysłana. Skontaktujemy się wkrótce.'; statusDiv.appendChild(messageSpan); setTimeout(()=>{ hideContactForm(); },3000); } else{ messageSpan.textContent='⚠️ Przepraszamy, wystąpił błąd. Prosimy spróbować ponownie lub skontaktować się telefonicznie.'; statusDiv.appendChild(messageSpan); } contactForm.reset(); fileNameSpan.textContent='Nie wybrano pliku'; document.getElementById('form-errors').innerHTML=''; });
+
+      const modal=document.getElementById('privacyModal'); const openBtn=document.getElementById('openPrivacyBtn'); const closeModal=document.querySelector('.close-modal');
+      openBtn.addEventListener('click',(e)=>{ e.preventDefault(); modal.style.display='flex'; });
+      closeModal.addEventListener('click',()=>{ modal.style.display='none'; });
+      window.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'; });
+
+      document.querySelectorAll('.card').forEach(card=>{ card.addEventListener('click',(e)=>{ e.stopPropagation(); if(card.classList.contains('expanded')) card.classList.remove('expanded'); else{ document.querySelectorAll('.card').forEach(c=>c.classList.remove('expanded')); card.classList.add('expanded'); } }); });
+      if(window.location.hash&&!document.querySelector(window.location.hash)) alert('Sekcja nie istnieje.');
+    })();
+  </script>
+</body>
+</html>
