@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Alarmonix | Systemy bezpieczeństwa | Wersja testowa</title>
+  <meta name="description" content="Alarmonix - systemy monitoringu, alarmowe i kontroli dostępu. Strona testowa, nie prowadzi działalności komercyjnej.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-dark: #0a0f14;
+      --bg-card: #0e1620;
+      --primary: #4da3ff;
+      --primary-hover: #2f8cff;
+      --text-light: #eaf2f9;
+      --text-muted: #8ea2b6;
+      --border-color: #182330;
+      --border-light: #1a2633;
+      --transition: all 0.3s ease;
+    }
+    body { background: var(--bg-dark); color: var(--text-light); font-family: 'Inter', sans-serif; line-height: 1.5; }
+    html { scroll-behavior: smooth; }
+    .container { max-width: 1350px; margin: 0 auto; padding: 0 25px; }
+    
+    /* Pasek testowy */
+    .test-banner {
+      background: #ff9800;
+      color: #1e1e1e;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+    }
+    
+    header { background: #0b1117; border-bottom: 1px solid var(--border-light); position: sticky; top: 0; z-index: 1000; }
+    .nav { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 15px 0; gap: 15px; }
+    .logo { cursor: pointer; display: flex; align-items: center; gap: 12px; }
+    .logo img { height: 90px; width: auto; filter: brightness(1.3) drop-shadow(0 2px 5px rgba(0,0,0,0.5)); transition: var(--transition); }
+    .logo img:hover { filter: brightness(1.6); transform: scale(1.02); }
+    .logo span { font-size: 28px; font-weight: 800; color: var(--primary); }
+    .nav-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+    .nav-links a { color: #c6d0da; text-decoration: none; font-weight: 600; font-size: 1rem; padding: 8px 12px; transition: var(--transition); border-radius: 12px; background: transparent; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(77, 163, 255, 0.1); }
+    .hero { padding: 120px 20px; background: radial-gradient(circle at 10% 30%, #13202e, var(--bg-dark)); text-align: left; }
+    .hero h1 { font-size: 52px; margin-bottom: 20px; max-width: 900px; font-weight: 800; line-height: 1.2; }
+    .hero p { color: var(--text-muted); font-size: 20px; margin-bottom: 0; max-width: 800px; line-height: 1.5; }
+    .section { padding: 80px 0; border-bottom: 1px solid var(--border-color); }
+    .section h2 { font-size: 36px; margin-bottom: 20px; font-weight: 700; }
+    .muted { color: var(--text-muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; overflow: visible; }
+    .card { background: var(--bg-card); padding: 30px; border-radius: 18px; border: 1px solid var(--border-color); transition: var(--transition); cursor: pointer; transform-origin: center center; }
+    .card:hover { border-color: var(--primary); transform: translateY(-6px); box-shadow: 0 20px 30px -15px rgba(0,0,0,0.3); }
+    .card-icon { font-size: 40px; color: var(--primary); margin-bottom: 20px; transition: transform 0.2s; }
+    .card h3 { margin-bottom: 15px; font-size: 24px; }
+    .card.expanded { transform: scale(1.02); border-color: var(--primary); box-shadow: 0 25px 35px -12px rgba(77,163,255,0.3); background: linear-gradient(145deg,#101a24,#0b1117); z-index: 10; }
+    .card-details { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+    .card.expanded .card-details { display: block; animation: fadeSlideUp 0.4s ease; }
+    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+    .gallery img { width: 100%; border-radius: 14px; border: 1px solid var(--border-color); transition: var(--transition); aspect-ratio: 16 / 9; object-fit: cover; }
+    .gallery img:hover { transform: scale(1.02); border-color: var(--primary); }
+    .faq-item { padding: 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
+    .faq-item h3 { margin-bottom: 10px; font-size: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .faq-item h3 i { transition: transform 0.3s; }
+    .faq-item.active h3 i { transform: rotate(180deg); }
+    .faq-answer { display: none; margin-top: 10px; color: var(--text-muted); line-height: 1.5; }
+    .faq-item.active .faq-answer { display: block; animation: fadeSlideDown 0.3s ease; }
+    @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    footer { border-top: 1px solid var(--border-color); padding: 40px 0 30px; }
+    .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 14px; }
+    .footer-bottom a { color: var(--primary); text-decoration: none; }
+    .footer-bottom a:hover { text-decoration: underline; }
+    
+    /* Cookie banner - widoczny od razu */
+    .cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      max-width: 500px;
+      background: #0b1117;
+      border: 1px solid var(--primary);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1100;
+      font-size: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+    }
+    .cookie-banner p { margin: 0; line-height: 1.4; }
+    .cookie-buttons { display: flex; gap: 12px; justify-content: flex-end; }
+    .cookie-buttons button {
+      background: var(--primary);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .cookie-buttons button#declineCookies {
+      background: #555;
+    }
+    .cookie-buttons button#declineCookies:hover { background: #777; }
+    .cookie-buttons button:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    
+    /* Modal polityki prywatności */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--primary);
+      border-radius: 24px;
+      max-width: 900px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      margin: 20px;
+      color: var(--text-light);
+    }
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .section h2 { font-size: 28px; }
+      .logo img { height: 55px; }
+      .logo span { font-size: 18px; }
+      .nav-links { gap: 10px; }
+      .nav-links a { padding: 6px 10px; font-size: 0.9rem; }
+      .cookie-banner { left: 10px; right: 10px; bottom: 10px; max-width: none; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 28px; }
+      .logo img { height: 45px; }
+      .logo span { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pasek informacyjny - tryb testowy -->
+  <div class="test-banner">
+    ⚠️ STRONA DZIAŁA W TRYBIE TESTOWYM | Nie prowadzi działalności komercyjnej | Wszelkie dane są przykładowe ⚠️
+  </div>
+
+  <header>
+    <div class="container nav">
+      <div class="logo" id="logoHome">
+        <img src="logo.png" alt="Alarmonix">
+        <span>Alarmonix</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#services">Usługi</a>
+        <a href="#projects">Realizacje</a>
+        <a href="#faq">FAQ</a>
+        <a href="#" id="openPrivacyBtn">Polityka prywatności</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Profesjonalne systemy bezpieczeństwa.</h1>
+        <p>Projektujemy, instalujemy i obsługujemy systemy monitoringu CCTV, alarmy antywłamaniowe oraz kontrolę dostępu. Ochrona mienia, nadzór nad pracownikami, szybkie powiadomienia o zagrożeniu – dostosujemy rozwiązanie do Twoich potrzeb. Każda instalacja jest projektowana indywidualnie – z myślą o skutecznej ochronie i łatwej obsłudze. Doświadczenie, rzetelność i wsparcie na każdym etapie.</p>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <h2>Usługi</h2>
+        <div class="grid">
+          <div class="card animate-on-scroll">
+            <div class="card-icon"><i class="fas fa-video"></i></div>
+            <h3>Monitoring CCTV</h3>
+            <p class="muted">Instalacja kamer IP, analogowych oraz rejestratorów z analityką.</p>
+            <div class="card-details">Oferujemy profesjonalny monitoring CCTV z kamerami o wysokiej rozdzielczości, nocną wizją, detekcją ruchu i zdalnym podglądem przez aplikację. Rejestratory z funkcją analityki AI, nagrywanie w chmurze i lokalnie.</div>
+          </div>
+          <div class="card animate-on-scroll">
+            <div class="card-icon"><i class="fas fa-bell"></i></div>
+            <h3>Systemy alarmowe</h3>
+            <p class="muted">Bezprzewodowe i przewodowe systemy antywłamaniowe.</p>
+            <div class="card-details">Systemy alarmowe – bezprzewodowe i przewodowe, z powiadomieniami push, syrenami zewnętrznymi i integracją z monitoringiem. Sterowanie przez aplikację, monitoring 24/7.</div>
+          </div>
+          <div class="card animate-on-scroll">
+            <div class="card-icon"><i class="fas fa-id-card"></i></div>
+            <h3>Kontrola dostępu</h3>
+            <p class="muted">Systemy RFID, biometria, rozpoznawanie twarzy.</p>
+            <div class="card-details">Kontrola dostępu RFID, czytniki kart, kody PIN, biometria odcisków palców. Zdalne zarządzanie uprawnieniami, logowanie wejść i wyjść, integracja z systemami rejestracji czasu pracy.</div>
+          </div>
+          <div class="card animate-on-scroll">
+            <div class="card-icon"><i class="fas fa-phone-alt"></i></div>
+            <h3>Wideodomofony</h3>
+            <p class="muted">Nowoczesne instalacje z aplikacją mobilną.</p>
+            <div class="card-details">Nowoczesne wideodomofony z kolorowym ekranem dotykowym, aplikacją mobilną, możliwością otwierania bramy i furtki z telefonu. Obsługa wielu użytkowników, nagrywanie zdarzeń.</div>
+          </div>
+          <div class="card animate-on-scroll">
+            <div class="card-icon"><i class="fas fa-tools"></i></div>
+            <h3>Serwis</h3>
+            <p class="muted">Modernizacje, naprawy i przeglądy systemów.</p>
+            <div class="card-details">Przeglądy, konserwacja, naprawy systemów bezpieczeństwa. Szybka interwencja, umowy serwisowe, modernizacja przestarzałych instalacji do najnowszych standardów.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <h2>Realizacje</h2>
+        <p class="muted">Przykładowe obiekty, które zabezpieczyliśmy.</p>
+        <div class="grid gallery">
+          <img src="images/monitoring1.webp" alt="Monitoring CCTV w biurze" loading="lazy" class="animate-on-scroll">
+          <img src="images/monitoring2.webp" alt="Kamery zewnętrzne monitoringu na budynku" loading="lazy" class="animate-on-scroll">
+          <img src="images/monitoring3.webp" alt="System kontroli dostępu RFID w firmie" loading="lazy" class="animate-on-scroll">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <h2>Najczęściej zadawane pytania</h2>
+        <div class="faq">
+          <div class="faq-item"><h3>Ile kosztuje montaż monitoringu? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Wycena jest darmowa. Cena zależy od indywidualnych potrzeb – ilości kamer, rodzaju obiektu i funkcji.</p></div></div>
+          <div class="faq-item"><h3>Jaki jest czas realizacji? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Zazwyczaj od jednego dnia w zależności od skali projektu. Dla małych instalacji 1-2 dni, dla większych obiektów do 2 tygodni.</p></div></div>
+          <div class="faq-item"><h3>W jakim regionie działacie? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Świadczymy usługi na terenie całej Polski. Dojeżdżamy do klienta bez względu na lokalizację.</p></div></div>
+          <div class="faq-item"><h3>Jaką dajecie gwarancję? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Na sprzęt 24 miesiące, na montaż 12 miesięcy. Dla stałych klientów oferujemy przedłużoną gwarancję.</p></div></div>
+          <div class="faq-item"><h3>Czy oferujecie serwis pogwarancyjny? <i class="fas fa-chevron-down"></i></h3><div class="faq-answer"><p>Tak, oferujemy umowy serwisowe na przeglądy i naprawy. Koszt od 300 zł/rok dla małych systemów.</p></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 Alarmonix | <a href="#" id="openPrivacyBtnFooter">Polityka prywatności</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (widoczny od razu) -->
+  <div id="cookieBanner" class="cookie-banner">
+    <p>🍪 Ta strona używa plików cookies w celu zapewnienia wygody i analizy ruchu. Klikając „Akceptuję”, wyrażasz zgodę na ich użycie. Wybór „Odrzucam” uniemożliwi zbieranie danych analitycznych.</p>
+    <div class="cookie-buttons">
+      <button id="acceptCookies">Akceptuję</button>
+      <button id="declineCookies">Odrzucam</button>
+    </div>
+  </div>
+
+  <!-- Modal Polityki Prywatności -->
+  <div id="privacyModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Polityka prywatności i RODO</h2>
+      <p><strong>1. POSTANOWIENIA OGÓLNE</strong></p>
+      <p>1.1. Niniejsza polityka prywatności strony internetowej www.alarmonix.pl (dalej Strona Internetowa) ma charakter informacyjny, co oznacza że nie jest ona źródłem obowiązków Klientów korzystających ze Strony Internetowej. Polityka prywatności zawiera przede wszystkim zasady dotyczące przetwarzania danych osobowych przez Administratora na Stronie Internetowej podczas korzystania z usług świadczonych przez Administratora danych osobowych, w tym podstawy, cele i zakres przetwarzania danych osobowych oraz prawa osób, których dane dotyczą, a także informacje w zakresie stosowania na Stronie Internetowej plików cookies oraz narzędzi analitycznych.</p>
+      <p>1.2. Administratorem danych osobowych zbieranych za pośrednictwem Strony Internetowej jest <strong>Alarmonix Sp. z o.o.</strong> z siedzibą w Katowicach, 40-001 Katowice, ul. Przykładowa 10, wpisaną do rejestru przedsiębiorców Krajowego Rejestru Sądowego pod numerem: 0000872620, NIP: 5833413237, REGON: 387659265, adres poczty elektronicznej: <strong>alarmonix@gmail.com</strong> – zwany dalej „Administratorem”.</p>
+      <p>1.3. Dane osobowe przetwarzane są przez Administratora zgodnie z obowiązującymi przepisami prawa, w szczególności zgodnie z rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. (RODO).</p>
+      
+      <p><strong>2. CELE PRZETWARZANIA DANYCH</strong></p>
+      <p>Administrator przetwarza dane osobowe w celach: wykonania umowy, marketingu bezpośredniego, księgowości, obrony roszczeń, obsługi zapytań.</p>
+      
+      <p><strong>3. PODSTAWY PRAWNE PRZETWARZANIA</strong></p>
+      <p>Przetwarzanie odbywa się na podstawie art. 6 ust. 1 lit. b RODO (wykonanie umowy), art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes), art. 6 ust. 1 lit. c RODO (obowiązek prawny) oraz art. 6 ust. 1 lit. a RODO (zgoda).</p>
+      
+      <p><strong>4. OKRES PRZECHOWYWANIA DANYCH</strong></p>
+      <p>Dane osobowe przechowywane są przez okres niezbędny do realizacji celu, a po tym czasie przez okres przedawnienia roszczeń lub wymagany przepisami prawa.</p>
+      
+      <p><strong>5. ODBIORCY DANYCH</strong></p>
+      <p>Dane mogą być przekazywane podmiotom obsługującym płatności, dostawcom rozwiązań IT, biurom rachunkowym, kancelariom prawnym – wyłącznie w zakresie niezbędnym i na podstawie umów powierzenia.</p>
+      
+      <p><strong>6. PRAWA OSÓB, KTÓRYCH DANE DOTYCZĄ</strong></p>
+      <p>Przysługuje prawo dostępu, sprostowania, usunięcia, ograniczenia, przenoszenia, sprzeciwu oraz cofnięcia zgody. Kontakt: alarmonix@gmail.com. Skargi można wnosić do Prezesa Urzędu Ochrony Danych Osobowych (PUODO).</p>
+      
+      <p><strong>7. COOKIES</strong></p>
+      <p>Strona używa plików cookies w celach analitycznych i remarketingowych. Użytkownik może zmienić ustawienia w swojej przeglądarce lub wyrazić/odmówić zgody za pomocą banera cookies.</p>
+      
+      <p><strong>8. POSTANOWIENIA KOŃCOWE</strong></p>
+      <p>Administrator zastrzega sobie prawo do zmian w polityce prywatności. Wszelkie zmiany będą publikowane na tej stronie. Polityka obowiązuje od 18 kwietnia 2026 r.</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Obsługa ciasteczek - banner pokazuje się od razu
+      let cookiesAccepted = localStorage.getItem('cookiesAccepted');
+      const cookieBanner = document.getElementById('cookieBanner');
+      
+      function setCookiesConsent(consent) {
+        localStorage.setItem('cookiesAccepted', consent);
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        if (consent === 'true') {
+          console.log('Zgoda na cookies udzielona – można włączyć analitykę');
+          // Tutaj w przyszłości można dodać kod Google Analytics
+        } else {
+          console.log('Brak zgody na cookies – analityka wyłączona');
+        }
+      }
+      
+      // Jeśli użytkownik nie podjął decyzji – pokazujemy banner
+      if (cookiesAccepted === null) {
+        if (cookieBanner) cookieBanner.style.display = 'flex';
+      } else {
+        setCookiesConsent(cookiesAccepted);
+      }
+      
+      const acceptBtn = document.getElementById('acceptCookies');
+      const declineBtn = document.getElementById('declineCookies');
+      if (acceptBtn) acceptBtn.addEventListener('click', () => setCookiesConsent('true'));
+      if (declineBtn) declineBtn.addEventListener('click', () => setCookiesConsent('false'));
+      
+      // FAQ accordion
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', () => item.classList.toggle('active'));
+      });
+      
+      // Smooth scroll dla kotwic
+      document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetId = link.getAttribute('href');
+          if (targetId && targetId !== '#') {
+            e.preventDefault();
+            const target = document.querySelector(targetId);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+      
+      // Modal polityki prywatności
+      const modal = document.getElementById('privacyModal');
+      const openBtns = document.querySelectorAll('#openPrivacyBtn, #openPrivacyBtnFooter');
+      const closeBtn = document.querySelector('.close-modal');
+      
+      openBtns.forEach(btn => {
+        if (btn) {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (modal) modal.style.display = 'flex';
+          });
+        }
+      });
+      if (closeBtn) closeBtn.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+      if (modal) {
+        window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+      }
+      
+      // Animacja przy scrollu
+      const animateElements = document.querySelectorAll('.animate-on-scroll');
+      function checkVisibility() {
+        animateElements.forEach(el => {
+          if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible');
+        });
+      }
+      window.addEventListener('scroll', checkVisibility);
+      checkVisibility();
+      
+      // Karty rozwijane
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (card.classList.contains('expanded')) card.classList.remove('expanded');
+          else {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('expanded'));
+            card.classList.add('expanded');
+          }
+        });
+      });
+      
+      // Logo powrót na górę
+      const logoHome = document.getElementById('logoHome');
+      if (logoHome) {
+        logoHome.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
